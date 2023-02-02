@@ -1,0 +1,160 @@
+Create a pod with name `mongo` using image `mongo` in namespace `hubs`.
+Extract logs of `kube-apiserver` pod and redirect them to `/tmp/api.log` file
+Ensure  a single instance of `nagios` is running on each node in kubernetes cluster where you can use `nagios` docker image.
+Create a pod named `origin` with three containers named `nginx`, `redis`, `memcached`. You can use respective images accordingly.
+Create a deployment with name `nginx-app` with `nginx` container using image `nginx:1.22.0-alpine`. The deployment should contain 3 replicas. Once all three pods are running update the existing deployment with `nginx:1.23.3-alpine`. Later roll back that update to old image `nginx:1.22.0-alpine`.
+Scale the deployment `nginx-app` created in previous task to 4 replicas. (use kubectl command to do this)
+Create a static pod named `static-redis` using kubelet (systemd-managed service). Use image `redis`. (Do not use kubectl command to create this pod)
+ Create a statefulset named `webapp` using image `nginx` with three replicas.
+ 
+ 
+ COMMANDS:
+ -----------
+    1  clear
+    2  sudo apt-get update
+    3  sudo apt-get install ca-certificates curl gnupg lsb-release
+    4  sudo mkdir -p /etc/apt/keyrings
+    5  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    6  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    7    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    8  sudo apt-get update
+    9  sudo chmod a+r /etc/apt/keyrings/docker.gpg
+   10  sudo apt-get update
+   11  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+   12  clear
+   13  sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+   14  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+   15  sudo apt-get update
+   16  sudo apt-get install -y kubelet kubeadm kubectl
+   17  clear
+   18  cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+   19  overlay
+   20  br_netfilter
+   21  EOF
+   22  sudo modprobe overlay
+   23  sudo modprobe br_netfilter
+   24  cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+   25  net.bridge.bridge-nf-call-iptables  = 1
+   26  net.bridge.bridge-nf-call-ip6tables = 1
+   27  net.ipv4.ip_forward                 = 1
+   28  EOF
+   29  sudo sysctl --system
+   30  clear
+   31  rm -rf /etc/containerd/config.toml
+   32  cat <<EOF | sudo tee /etc/containerd/config.toml
+   33  version = 2
+   34  [plugins]
+   35    [plugins."io.containerd.grpc.v1.cri"]
+   36     [plugins."io.containerd.grpc.v1.cri".containerd]
+   37        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+   38          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+   39            runtime_type = "io.containerd.runc.v2"
+   40            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+   41              SystemdCgroup = true
+   42  EOF
+   43  clear
+   44  sudo systemctl restart containerd
+   45  kubeadm init
+   46  clear
+   47  mkdir -p $HOME/.kube
+   48  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   49  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   50  kubectl get nodes
+   51  curl https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/calico.yaml -O
+   52  kubectl apply -f calico.yaml
+   53  kubectl get po -n kube-system
+   54  kubectl get nodes
+   55  crictl ps
+   56  sudo crictl config --set runtime-endpoint=unix:///run/containerd/containerd.sock --set image-endpoint=unix:///run/containerd/containerd.sock
+   57  crictl images list
+   58  kubectl get nodes
+   59  clear
+   60  ls
+   61  vi nagios.yaml
+   62  cat nagios.yaml 
+   63  k get po -n hubs
+   64  alias k=kubectl
+   65  clear
+   66  k get po -n hubs
+   67  k apply -f nagios.yaml 
+   68  vi nagios.yaml 
+   69  cat nagios.yaml 
+   70  k apply -f nagios.yaml 
+   71  k get po -n hubs
+   72  vi nagios.yaml 
+   73  k apply -f nagios.yaml 
+   74  k get po -n hubs
+   75  vi nagios.yaml 
+   76  k get po -n hubs
+   77  vi origin-rs.yaml
+   78  clear
+   79  ls
+   80  k apply -f origin-rs.yaml 
+   81  k get po -n hubs
+   82  cat origin-rs.yaml 
+   83  k get rs -n hubs
+   84  ls
+   85  vi nginx-app-deployment.yaml
+   86  k apply -f nginx-app-deployment.yaml 
+   87  k get po -n hubs
+   88  k delete po nginx-app-deployment-cddbb447b-mz8x2 -n hubs
+   89  k get po -n hubs
+   90  k delete po origin-rs-8cn2x -n hubs
+   91  k get po -n hubs
+   92  clear
+   93  k get po -n hubs
+   94  k get deployments
+   95  k get deployments -n hubs
+   96  k set image deployment/nginx-app-deployment -n hubs nginx=nginx:1.23.3-alpine
+   97  k history nginx-app-deployment
+   98  k history deployment/nginx-app-deployment
+   99  k get po -n hubs
+  100  k get po -n hubs -o wide
+  101  k describe nginx-app-deployment-5975f58fdb-cr8tf
+  102  k describe nginx-app-deployment-5975f58fdb-cr8tf -n hubs
+  103  k describe po nginx-app-deployment-5975f58fdb-cr8tf -n hubs
+  104  k describe rs -n hubs
+  105  k describe rs -n hubs | grep 1.23
+  106  clear
+  107  kubectl rollout status -w deployment/nginx-app-deployment
+  108  kubectl rollout status -w deployment/nginx-app-deployment -n hubs
+  109  k describe rs -n hubs | grep 1.23
+  110  k rollout history 
+  111  k rollout history deployment/nginx-app-deployment -n hubs
+  112  k rollout history deployment/nginx-app-deployment -n hubs revision=1
+  113  k rollout history deployment/nginx-app-deployment -n hubs --revision=1
+  114  k rollout history deployment/nginx-app-deployment -n hubs --revision=2
+  115  k rollout undo deployment/nginx-app-deployment -n hubs --to-revision=1
+  116  k rollout history deployment/nginx-app-deployment -n hubs
+  117  k rollout history deployment/nginx-app-deployment -n hubs --revision=2
+  118  k scale --current-replicas=3 --replicas=4 deployment/nginx-app-deployment -n hubs
+  119  k describe deployment/nginx-app-deployment -n hubs
+  120  k rollout history deployment/nginx-app-deployment -n hubs
+  121  k get deployments
+  122  k get deployments -n hubs
+  123  k get po -n hubs
+  124  ls
+  125  cp mongo.yaml static-redis.yaml
+  126  vi static-redis.yaml 
+  127  ls
+  128  mv static-redis.yaml /etc/kubernetes/manifests/
+  129  k get pods -n hubs
+  130  vi webapp-ss.yaml
+  131  k get pods -n hubs
+  132  k apply -f webapp-ss.yaml 
+  133  k get pods -n hubs
+  134  k delete po webapp-ss-0 -n hubs
+  135  k get pods -n hubs
+  136  k get rs -n hubs
+  137  k get ds -n hubs
+  138  k get ss -n hubs
+  139  k get ss
+  140  k get ss -n hubs
+  141  k get statefulset -n hubs
+  142  history
+  143  k get pods -n hubs
+  144  k get rs -n hubs
+  145  k get ds -n hubs
+  146  k get statefulset -n hubs
+  147  clear
+  148  history
