@@ -7,6 +7,7 @@ Scale the deployment `nginx-app` created in previous task to 4 replicas. (use ku
 Create a static pod named `static-redis` using kubelet (systemd-managed service). Use image `redis`. (Do not use kubectl command to create this pod)
  Create a statefulset named `webapp` using image `nginx` with three replicas.
  
+ CHEAT SHEET: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
  
  COMMANDS:
  -----------
