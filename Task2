@@ -1,0 +1,516 @@
+TASK:
+-----
+create a pod with init container, init container should create an empty file named /tmp/test.txt, the pod main container should exit if it doesn't find file /tmp/test.txt. (use empty dir voulme)
+create a pod with pv and pvc and use host path for volume  mounts.
+create a kubernetes secret as follows
+Name: super
+password: origin
+create pod named pod-secret-file using redis image which mounts secret name super at /secrets.
+create a pod name pod-secret-env using redis image which exports credential as PASSWORD
+
+
+COMMANDS HISTORY:
+-----------------
+
+  194  kubectl get pods -n hubs
+  195  vi intiContainer.yaml
+  196  ls /tmp/
+  197  ls
+  198  cat his.txt 
+  199  mv his.txt history.txt
+  200  clear
+  201  ls
+  202  find history.txt
+  203  ls
+  204  vi intiContainer.yaml 
+  205  kubectl get po -n hubs
+  206  vi intiContainer.yaml 
+  207  kubectl apply -f intiContainer.yaml 
+  208  vi intiContainer.yaml 
+  209  kubectl apply -f intiContainer.yaml 
+  210  vi intiContainer.yaml 
+  211  kubectl apply -f intiContainer.yaml 
+  212  mv intiContainer.yaml init.yaml
+  213  clear
+  214  ls
+  215  kubectl apply -f init.yaml
+  216  vi init.yaml 
+  217  kubectl apply -f init.yaml
+  218  vi init.yaml 
+  219  kubectl apply -f init.yaml
+  220  vi init.yaml 
+  221  kubectl apply -f init.yaml
+  222  vi init.yaml 
+  223  ls
+  224  mkdir emptDir
+  225  rm emptDir/
+  226  rm -r emptDir/
+  227  clear
+  228  ls
+  229  mkdir emptyDir
+  230  kubectl apply -f init.yaml
+  231  vi init.yaml 
+  232  kubectl apply -f init.yaml
+  233  kubectl version --short
+  234  vi init.yaml 
+  235  rm -r init.yaml 
+  236  clear
+  237  vi inti.yaml
+  238  rm inti.yaml 
+  239  clear
+  240  vi initContPod.yaml
+  241  kubectl apply -f init.yaml
+  242  ls
+  243  mv emptyDir /
+  244  ls
+  245  cd /
+  246  ls
+  247  cd
+  248  ls
+  249  kubectl apply -f initContPod.yaml 
+  250  mv initContPod.yaml podwithinitcont.yaml
+  251  clear
+  252  ls
+  253  k apply -f podwithinitcont.yaml 
+  254  kubectl apply -f podwithinitcont.yaml 
+  255  vi podwithinitcont.yaml 
+  256  kubectl apply -f podwithinitcont.yaml 
+  257  vi podwithinitcont.yaml 
+  258  clear
+  259  kubectl apply -f podwithinitcont.yaml
+  260  kubectl get pods
+  261  kubectl get pods -n hubs
+  262  kubectl describe demo -n hubs
+  263  kubectl describe po demo -n hubs
+  264  clear
+  265  ls
+  266  cd /tmp/
+  267  ls
+  268  kubectl logs po demo -n hubs
+  269  clear
+  270  ls
+  271  alias k=kubectl
+  272  k get po -n hubs
+  273  k describe po demo -n hubs
+  274  ls /tmp/
+  275  cat /tmp/test.txt 
+  276  k describe po demo -n hubs
+  277  k get po -n hubs
+  278  ls
+  279  vi podwithinitcont.yaml 
+  280  k delete po demo -n hubs
+  281  k get po -n hubs
+  282  kubectl apply -f podwithinitcont.yaml
+  283  vi podwithinitcont.yaml 
+  284  kubectl apply -f podwithinitcont.yaml
+  285  k get po -n hubs
+  286  k describe po demo -n hubs
+  287  vi podwithinitcont.yaml 
+  288  kubectl apply -f podwithinitcont.yaml
+  289  k delete po demo -n hubs
+  290  kubectl apply -f podwithinitcont.yaml
+  291  k delete po demo -n hubs
+  292  kubectl apply -f podwithinitcont.yaml
+  293  k get po -n hubs
+  294  k describe po demo -n hubs
+  295  clear
+  296  k delete po demo -n hubs
+  297  k get po -n hubs
+  298  rm -r /tmp/test.txt 
+  299  clear
+  300  vi podwithinitcont.yaml 
+  301  clear
+  302  kubectl apply -f podwithinitcont.yaml
+  303  k get po -n hubs
+  304  rm -r podwithinitcont.yaml 
+  305  clear
+  306  vi initpod.yaml
+  307  k delete po demo -n hubs
+  308  kubectl apply -f podwithinitcont.yaml
+  309  l
+  310  kubectl apply -f initpod.yaml
+  311  k delete po demo -n hubs
+  312  k delete po demo 
+  313  vi initpod.yaml
+  314  k delete po demo -n hubs
+  315  k delete po init-pod 
+  316  k get po -n hubs
+  317  k get po 
+  318  k delete po init-demo
+  319  clear
+  320  kubectl apply -f initpod.yaml
+  321  k get po -n hubs
+  322  cd /
+  323  ls
+  324  emptyDir/
+  325  ls
+  326  cd /e
+  327  cd emptyDir/
+  328  ls
+  329  cd
+  330  clear
+  331  ls
+  332  vi initpod.yaml 
+  333  ls /w
+  334  ls /
+  335  k describe po init-pod -n hubs
+  336  k get po -n hubs
+  337  k describe po initpod -n hubs
+  338  vi initpod.yaml 
+  339  clear
+  340  k delete po initpod -n hubs
+  341  kubectl apply -f initpod.yaml
+  342  k delete po initpod -n hubs
+  343  k get po -n hubs
+  344  clear
+  345  ls
+  346  vi initpod.yaml 
+  347  kubectl apply -f initpod.yaml -n hubs
+  348  vi initpod.yaml 
+  349  clear
+  350  k get po -n hubs
+  351  k get po 
+  352  kubectl apply -f initpod.yaml -n hubs
+  353  k get po -n hubs
+  354  ls /
+  355  ls /emptyDir/
+  356  clear
+  357  k get po -n hubs
+  358  clear
+  359  k get po -n hubs
+  360  k describe po initpod -n hubs
+  361  cd /emptyDir/
+  362  ls
+  363  ls -al
+  364  ls
+  365  cd
+  366  k get po -n hubs
+  367  k delete po initpod -n hubs
+  368  vi initpod.yaml 
+  369  kubectl apply -f initpod.yaml -n hubs
+  370  vi initpod.yaml 
+  371  kubectl apply -f initpod.yaml -n hubs
+  372  k get po -n hubs
+  373  k describe po initpod -n hubs
+  374  ls /emptyDir/
+  375  ls
+  376  cd /
+  377  ls
+  378  cd emptyDir/
+  379  ls
+  380  vi initpod.yaml 
+  381  ls
+  382  cd
+  383  vi initpod.yaml 
+  384  clear
+  385  rm /emptyDir/
+  386  rm -r /emptyDir/
+  387  ls
+  388  cd /
+  389  ls
+  390  clear
+  391  cd
+  392  clear
+  393  ls
+  394  k delete po initpod -n hubs
+  395  clear
+  396  kubectl apply -f initpod.yaml -n hubs
+  397  k get po -n hubs
+  398  k describe po initpod -n hubs
+  399  k delete po initpod -n hubs
+  400  k get po -n hubs
+  401  vi initpod.yaml 
+  402  k delete po initpod -n hubs
+  403  kubectl apply -f initpod.yaml -n hubs
+  404  k delete po initpod -n hubs
+  405  kubectl apply -f initpod.yaml -n hubs
+  406  k get po -n hubs
+  407  k delete po initpod -n hubs
+  408  vi initpod.yaml 
+  409  k delete po initpod -n hubs
+  410  k get po -n hubs
+  411  kubectl apply -f initpod.yaml -n hubs
+  412  k get po -n hubs
+  413  k describe po initpod -n hubs
+  414  CD /
+  415  cd /
+  416  ls
+  417  k get po -n hubs
+  418  ls
+  419  cd
+  420  k delete po initpod -n hubs
+  421  vi initpod.yaml 
+  422  k get po -n hubs
+  423  kubectl apply -f initpod.yaml -n hubs
+  424  k get po -n hubs
+  425  k describe po initpod -n hubs
+  426  k delete po initpod -n hubs
+  427  k get po -n hubs
+  428  vi initpod.yaml 
+  429  kubectl apply -f initpod.yaml -n hubs
+  430  k get po -n hubs
+  431  k describe po initpod -n hubs
+  432  k logs pod initpod -n hubs
+  433  k logs initpod -n hubs
+  434  vi initpod.yaml 
+  435  k delete po initpod -n hubs
+  436  kubectl apply -f initpod.yaml -n hubs
+  437  k logs initpod -n hubs
+  438  k get po -n hubs
+  439  cd
+  440  cd /
+  441  ls
+  442  cd 
+  443  k logs initpod -n hubs
+  444  k get po -n hubs
+  445  k logs initpod -n hubs
+  446  k describe po initpod -n hubs
+  447  k logs initpod -n hubs
+  448  k get po -n hubs
+  449  vi initpod.yaml 
+  450  clear
+  451  k delete po initpod -n hubs
+  452  clear
+  453  kubectl apply -f initpod.yaml -n hubs
+  454  k get po -n hubs
+  455  k logs initpod -n hubs
+  456  k describe po initpod -n hubs
+  457  k get po -n hubs
+  458  k delete po initpod -n hubs
+  459  k get po -n hubs
+  460  clear
+  461  k get po -n hubs
+  462  k delete po initpod -n hubs
+  463  vi initpod.yaml 
+  464  clear
+  465  k get po -n hubs
+  466  kubectl apply -f initpod.yaml -n hubs
+  467  k get po -n hubs
+  468  k describe po initpod -n hubs
+  469  clear
+  470  k describe po initpod -n hubs
+  471  k delete po initpod -n hubs
+  472  vi initpod.yaml 
+  473  clear
+  474  k get po -n hubs
+  475  kubectl apply -f initpod.yaml -n hubs
+  476  k get po -n hubs
+  477  vi initpod.yaml 
+  478  k get po -n hubs
+  479  k describe po initpod -n hubs
+  480  k logs initpod -n hubs
+  481  clear
+  482  ls
+  483  k get po -n hubs
+  484  alias k=kubectl
+  485  k get po -n hubs
+  486  cd /mnt/
+  487  ls
+  488  mkdir /mnt/data
+  489  ls
+  490  clear
+  491  cd
+  492  k get pv
+  493  k get pv -n hubs
+  494  vi pv.yaml
+  495  k apply -f pv.yaml 
+  496  k get pv
+  497  k get pv -n hubs
+  498  k get pv -n deafult
+  499  vi pv.yaml
+  500  k apply -f pv.yaml 
+  501  kl delete pv task-pv-volume
+  502  k delete pv task-pv-volume
+  503  k apply -f pv.yaml 
+  504  k get pv
+  505  vi pvc.yaml
+  506  k apply -f pvc.yaml 
+  507  k get pv
+  508  k get pvc
+  509  vi pvpod.yaml
+  510  k apply -f pvpod.yaml 
+  511  k get po -n hubs
+  512  k get po 
+  513  k delete po task-pv-pod 
+  514  k apply -f pvpod.yaml -n hubs
+  515  k get po -n hubs
+  516  k get po 
+  517  k get po -n hubs
+  518  clear
+  519  k get po -n hubs
+  520  k logs task-pv-pod -n hubs
+  521  k get po -n hubs
+  522  k describe task-pv-pod -n hubs
+  523  k describe po task-pv-pod -n hubs
+  524  k get po -n hubs
+  525  clear
+  526  k get pv
+  527  k get pvc
+  528  k get po -n hubs
+  529  kubectl get pod task-pv-pod
+  530  kubectl get pod task-pv-pod -n hubs
+  531  k apply -f pvpod.yaml
+  532  k get po 
+  533  k get po -n hubs
+  534  k delete po task-pv-pod -n hubs
+  535  clear
+  536  kubectl exec -it task-pv-pod -- /bin/bash
+  537  clear
+  538  cat /usr/share/nginx/html
+  539  cd /usr/share/
+  540  ls
+  541  cd
+  542  sh -c "echo 'Hello from Kubernetes storage' > /mnt/data/index.html"
+  543  cat /mnt/data/index.html
+  544  kubectl get pod task-pv-pod
+  545  apt update
+  546  apt install curl
+  547  curl http://localhost/
+  548  netstat -tulpen
+  549  apt install net-tools
+  550  netstat -tulpen
+  551  netstat -tulpen | grep 80
+  552  kubectl get pod task-pv-pod
+  553  cat /mnt/data/index.html
+  554  cat /usr/share/ngi
+  555  k apply -f pvpod.yaml
+  556  kubectl get pod task-pv-pod
+  557  k delete po task-pv-pod 
+  558  k apply -f pvpod.yaml
+  559  kubectl get pod task-pv-pod
+  560  cler
+  561  clear
+  562  kubectl get pod -
+  563  kubectl get pod 
+  564  k logs task-pv-pod
+  565  kubectl get pod 
+  566  k describe pod task-pv-pod
+  567  netstat -tulpen
+  568  clear
+  569  kubectl get pod 
+  570  k delete po task-pv-pod 
+  571  clear
+  572  ls
+  573  vi pvpod.yaml 
+  574  k get pv
+  575  k get pvc
+  576  cat pvc.yaml 
+  577  clear
+  578  kubectl get pod 
+  579  k apply -f pvpod.yaml
+  580  kubectl get pod 
+  581  curl http://localhost/
+  582  apt update
+  583  apt install curl
+  584  kubectl exec -it task-pv-pod -- /bin/bash
+  585  clear
+  586  kubectl exec -it task-pv-pod -- /bin/bash
+  587  clear
+  588  ls
+  589  alias k=kubectl
+  590  clear
+  591  k get po -hubs
+  592  k get po -n hubs
+  593  vi secret.yaml
+  594  echo super | base 64
+  595  echo super | base64
+  596  echo origin | base64
+  597  vi secret.yaml
+  598  vi pod-secret-file.yaml
+  599  ls
+  600  k apply -f secret.yaml
+  601  k get secret
+  602  ls
+  603* vi pod-secret.yaml 
+  604  k get po -hubs
+  605  k get po -n hubs
+  606  clear
+  607  ls
+  608  k apply -f pod-secret-file.yaml 
+  609  k get po -n hubs
+  610  k get po
+  611  cd /
+  612  ls
+  613  k get po
+  614  ls
+  615  k exec -it pod-secret-file sh
+  616  cd
+  617  k exec -it pod-secret-file bash/sh
+  618  k exec -it pod-secret-file bash
+  619  clear
+  620  ls
+  621  k get secret
+  622  cat pod-secret-file.yaml 
+  623  cat pvpod.yaml 
+  624  cat pv.yaml 
+  625  cat pvc.yaml 
+  626  clear
+  627  ls
+  628  vi pod-secret-env.yaml
+  629  k get secret
+  630  k apply pod-secret-env.yaml 
+  631  k apply -f pod-secret-env.yaml 
+  632  k get po
+  633  k logs po pod-env-secret
+  634  k logs pod-env-secret
+  635  k describe po pod-secret-file
+  636  k describe po pod-env-file
+  637  k describe po pod-env-secret
+  638  clear
+  639  k delete po 
+  640  k dellete po pod-env-secret
+  641  k delete po pod-env-secret
+  642  vi pod-secret-env.yaml
+  643  k apply -f pod-secret-env.yaml 
+  644  k get po
+  645  k describe po pod-env-secret
+  646  cat secret.yaml 
+  647  k delete po pod-env-secret
+  648  vi pod-secret-env.yaml
+  649  k apply -f pod-secret-env.yaml 
+  650  k get po
+  651  k describe po pod-env-secret
+  652  k get po
+  653  k exec -it pod-env-secret bash
+  654  k get po
+  655  k logs pod-env-secret
+  656  k get po
+  657  k describe po pod-env-secret
+  658  k get node
+  659  k describe node instance-prashanth
+  660  k taint node instance-prashanth node.kubernetes.io/disk-pressure:NoSchedule-
+  661  k get node
+  662  k get po
+  663  k get po -n hubs
+  664  k get po
+  665  kubectl rollout restart
+  666  kubectl rollout restart pod-env-secret
+  667  kubectl rollout restart po pod-env-secret
+  668  k get po
+  669  k delete po pod-env-secret
+  670  k get po
+  671  k apply -f pod-secret-env.yaml 
+  672  k get po
+  673  k delete po task-pv-pod
+  674  k apply -f pvpod.yaml 
+  675  k get po
+  676  k exec -it pod-env-secret bash
+  677  clear
+  678  k get po -n hubs
+  679  k rollout restar deployment/nginx-app-deployment
+  680  k rollout restart deployment/nginx-app-deployment
+  681  k rollout restart deployment/nginx-app-deployment -n hubs
+  682  k get po -n hubs
+  683  ls
+  684  k delete deployment/nginx-app-deployment -n hubs
+  685  k get po -n hubs
+  686  k apply -f nginx-app-deployment.yaml 
+  687  k get po -n hubs
+  688  k delete rs origin-rs -n hubs
+  689  k apply -f origin-rs.yaml 
+  690  k get po -n hubs
+  691  k get deployments
+  692  k get deployments -n hubs
+  693  k logs deployment/nginx-app-deployment -n hubs
+  694  k get deployments -n hubs
+  695  k get po -n hubs
