@@ -514,3 +514,70 @@ COMMANDS HISTORY:
   693  k logs deployment/nginx-app-deployment -n hubs
   694  k get deployments -n hubs
   695  k get po -n hubs
+
+***********************************************************
+SERVICE:
+
+root@instance-prashanth:~# k get svc -n hubs
+NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+my-service      ClusterIP   10.106.155.151   <none>        80/TCP         9m5s
+my-service-np   NodePort    10.97.183.57     <none>        80:31069/TCP   5m11s
+root@instance-prashanth:~# k get ep -n hubs
+NAME            ENDPOINTS                                                  AGE
+my-service      192.168.145.176:80,192.168.145.179:80,192.168.145.180:80   9m22s
+my-service-np   192.168.145.176:80,192.168.145.179:80,192.168.145.180:80   5m28s
+
+COMMANDS:
+--------
+
+  764  vi my-service.yaml 
+  765  k delete svc my-service -n hubs
+  766  kubectl apply -f my-service.yaml 
+  767  clear
+  768  ls
+  769  k get ep
+  770  k get ep -n hubs
+  771  k get po -n hubs -o wide
+  772  curl 192.168.145.176:9376
+  773  192.168.145.176
+  774  curl 192.168.145.176
+  775  curl 192.168.145.180
+  776  netstat -tulpen 
+  777  curl 192.168.145.176
+  778  clear
+  779  k get svc -n hubs
+  780  k get ep -n hubs
+  781  curl 10.110.108.104
+  782  curl 10.110.108.104:9376
+  783  curl 10.110.108.104:80
+  784  clear
+  785  k get po -n hubs
+  786  k exec -it origin-rs-wj942 -n hubs
+  787  k exec -it po origin-rs-wj942 -n hubs
+  788  k exec  po origin-rs-wj942 -it -n hubs
+  789  k exec origin-rs-wj942 -it -n hubs
+  790  docker exec -it origin-rs-wj942 -n hubs
+  791  k exec -it origin-rs-wj942 -n hubs bash
+  792  clear
+  793  vi my-service-np.yaml
+  794  vi my-service.yaml 
+  795  k delete svc my-service -n hubs
+  796  kubectl apply -f my-service.yaml 
+  797  k get ep -n hubs
+  798  k get svc -n hubs
+  799  curl 10.106.155.151
+  800  curl 10.106.155.151:81
+  801  curl 10.106.155.151:80
+  802  clear
+  803  k get ep -n hubs
+  804  k get svc -n hubs
+  805  cp my-service.yaml my-service-np.yaml
+  806  vi my-service-np.yaml 
+  807  k apply -f my-service-np.yaml 
+  808  k get svc -n hubs
+  809  curl 10.97.183.57
+  810  curl 10.106.155.151
+  811  clear
+  812  k get svc -n hubs
+  813  k get ep -n hubs
+
